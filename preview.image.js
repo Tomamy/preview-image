@@ -84,6 +84,8 @@
 				curtype = files[i].match(/\.[a-z]+$/);	
 				if(!curtype){
 					curtype = "";		
+				}else {
+					curtype = curtype[0];	
 				}
 				curtype = curtype.replace(".","");
 			}
@@ -101,7 +103,7 @@
 				target = e.target || e.srcElement;
 				files = target.files;
 			}else {
-				files = _this.image_file.split(",");	
+				files = _this.image_file.value.split(",");	
 			}
 			if(_this.isValidFile(files)){
 				_this.isEmpty = true;
