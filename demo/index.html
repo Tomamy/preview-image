@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<meta charset="utf-8"/>
+		<link rel="stylesheet" type="text/css" href="../preview.image.css"/>
+	</head>
+	<body>
+		<input type="file" id="image-file"/>
+		<script src="../preview.image.js" type="text/javascript"></script>
+		<script>
+			var previewImage = new PreviewImage({
+				id: "image-file",
+				multiple: true,
+				type: ['png'],
+				text: "选择文件"
+			});
+		</script>
+	</body>
+</html>
