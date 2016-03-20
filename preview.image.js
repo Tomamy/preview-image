@@ -13,7 +13,11 @@
 			}		
 		}
 		function isFileReader(){
-			return FileReader ? true : false;	
+			if(typeof FileReader == "undefined"){
+				return false;	
+			}else {
+				return true;	
+			}
 		}
 		return {
 			extend: extend,
@@ -21,7 +25,7 @@
 		}
 	}();	
 	var color = {
-		default: '#666',
+		defaults: '#666',
 		danger: '#d9534f',
 		success: '#5cb85c',
 		info: '#5bc0de',
@@ -46,7 +50,8 @@
 		this.action();
 	}
 	PreviewImage.prototype.init = function(){
-		this.image_file.style.visibility = "hidden";
+		this.image_file.style.filter = "Alpha(opacity=0)";
+		this.image_file.style.opacity = "0";
 		var div_wrap = document.createElement("div");
 		div_wrap.className = "preview-file-wrap";
 		var button_wrap = document.createElement("div");
@@ -73,7 +78,15 @@
 		var valid_type = this.options.type.join(','),
 			curtype;
 		for(var i = 0; i < files.length; i++){
-			curtype = files[i].type.replace("image/","");
+			if(Util.isFileReader()){
+				curtype = files[i].type.replace("image/","");
+			}else {
+				curtype = files[i].match(/\.[a-z]+$/);	
+				if(!curtype){
+					curtype = "";		
+				}
+				curtype = curtype.replace(".","");
+			}
 			if(valid_type.indexOf(curtype) != -1){
 				return true;			
 			}	
@@ -92,7 +105,7 @@
 			}
 			if(_this.isValidFile(files)){
 				_this.isEmpty = true;
-				_this.notice.style.color = color.default;   
+				_this.notice.style.color = color.defaults;   
 				_this.images_wrap.innerHTML = "";
 				_this.showImage(files);
 			}else {
