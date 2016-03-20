@@ -1,6 +1,14 @@
 .preview-file-wrap {
 	
 }
+.preview-file-wrap .button-wrap {
+	display: relative;
+}
+.preview-file-wrap input[type=file] {
+	width: 88px;
+	height: 41px;
+	position: absolute;
+}
 .preview-file-wrap label {
 	padding: 10px 15px;
 	margin-right: 8px;

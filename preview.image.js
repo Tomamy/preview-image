@@ -46,7 +46,7 @@
 		this.action();
 	}
 	PreviewImage.prototype.init = function(){
-		this.image_file.style.display = "none";
+		this.image_file.style.visibility = "hidden";
 		var div_wrap = document.createElement("div");
 		div_wrap.className = "preview-file-wrap";
 		var button_wrap = document.createElement("div");
@@ -83,12 +83,18 @@
 	PreviewImage.prototype.action = function(){
 		var _this = this;
 		_this.image_file.onchange = function(e){
-			var target = e.target || e.srcElement;
-			if(_this.isValidFile(target.files)){
+			var target,files; 
+			if(Util.isFileReader()){
+				target = e.target || e.srcElement;
+				files = target.files;
+			}else {
+				files = _this.image_file.split(",");	
+			}
+			if(_this.isValidFile(files)){
 				_this.isEmpty = true;
 				_this.notice.style.color = color.default;   
 				_this.images_wrap.innerHTML = "";
-				_this.showImage(target.files);
+				_this.showImage(files);
 			}else {
 				_this.isEmpty = false;
 				_this.notice.style.color = color.danger;   
@@ -111,10 +117,8 @@
 				this.readAsDataURL(files[i]);	
 			}	
 		}else {
-			var paths = this.image_file.value;
-			paths = paths.slice(",");
-			for(i=0;i<paths.length;i++){
-				this.images_wrap.appendChild(this.createImage(paths[i]));	
+			for(i=0;i<files.length;i++){
+				this.images_wrap.appendChild(this.createImage(files[i]));	
 			}
 		}	
 	} 
